@@ -1,0 +1,61 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: hazelcast-server-rbac
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: default
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hazelcast-server-service
+spec:
+  selector:
+    app: hazelcast-server
+  ports:
+    - protocol: TCP
+      port: 8762
+      targetPort: 8762
+  type: LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hazelcast-server-deployment
+  labels:
+    app: hazelcast-server
+spec:
+  selector:
+    matchLabels:
+      app: hazelcast-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hazelcast-server
+    spec:
+      containers:
+        - name: hazelcast-server-1
+          image: gcr.io/hazelcast-cluster/hazelcast-server-k8s:latest
+          imagePullPolicy: Always
+          env:
+          - name: EUREKA_URI
+            value: http://eureka:admin@eureka-service:8761/eureka
+          - name: hazelcast.port
+            value: "5701"
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          ports:
+          - containerPort: 8762

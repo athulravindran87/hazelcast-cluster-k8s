@@ -1,0 +1,52 @@
+
+
+##### Lists ############
+
+kubectl get pods -o wide
+kubectl get deployment
+kubectl get services
+
+###### Delete ###########
+
+##run this from project home directory to delete deployments###
+
+kubectl delete -f discovery-server-k8s/deploy/kube-discovery-server.yaml
+kubectl delete -f hazelcast-server-k8s/deploy/kube-hazelcast-server.yaml
+kubectl delete -f hazelcast-client-k8s/deploy/kube-hazelcast-client.yaml
+
+## Delete a specific pod
+
+##Run this to get a pod number and run the delete command below
+kubectl get pod -o wide
+kubectl delete pod <podnumber>
+
+##### Create #######
+##run this from project home directory###
+
+kubectl apply -f discovery-server-k8s/deploy/kube-discovery-server.yaml
+kubectl apply -f hazelcast-server-k8s/deploy/kube-rbac.yaml
+kubectl apply -f hazelcast-server-k8s/deploy/kube-hazelcast-server.yaml
+kubectl apply -f hazelcast-client-k8s/deploy/kube-hazelcast-client.yaml
+
+## open firewall to a specific nodePort
+gcloud compute firewall-rules create eureka-node-port --allow tcp:30222
+
+
+##### scale ######
+
+kubectl scale --replicas=3 deployment.apps/hazelcast-server-deployment
+
+####Build images and push to GCR (Google Container Registry) #######
+
+cd discovery-server
+docker build -t gcr.io/hazelcast-cluster/discovery-server:v2 -f deploy/Dockerfile .
+docker push  gcr.io/hazelcast-cluster/discovery-server:v2
+
+cd hazelcast-server
+docker build -t gcr.io/hazelcast-cluster/hazelcast-server:v2 -f deploy/Dockerfile .
+docker push  gcr.io/hazelcast-cluster/hazelcast-server:v2
+
+cd hazelcast-client
+docker build -t gcr.io/hazelcast-cluster/hazelcast-client:v2 -f deploy/Dockerfile .
+docker push  gcr.io/hazelcast-cluster/hazelcast-client:v2
+
