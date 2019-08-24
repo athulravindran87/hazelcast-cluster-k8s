@@ -35,25 +35,41 @@ Start the services in order...Discovery, Hazelcast server and hazelcast client. 
    `Example: -Dserver.port=8763 -Dhazelcast.port=5702`. 
    Same applies to hazelcast-client as well but client requires `server.port` property only.
    
- 2. Running on Docker locally
+ 2. Running on Minikube locally
    
-    Execute docker-compose.yaml on your local docker engine. Compose will spin 5 containers. 1 Eureka server,2 hazelcast    
-    servers and 2 hazelcast clients. Port numbers are mentioned in the compose file.
+    Pre-requisite: 
+    
+      1.Set up Minikube on your local machine and run the following commands
+      2.Install the Google Cloud SDK, which includes the `gcloud` command-line tool. Using the gcloud command line tool,       
+      install the Kubernetes command-line tool. 
+    ```
+    kubectl apply -f discovery-server-k8s/deploy/kube-discovery-server.yaml
+    kubectl apply -f hazelcast-server-k8s/deploy/kube-rbac.yaml   
+    kubectl apply -f hazelcast-server-k8s/deploy/kube-hazelcast-server.yaml
+    kubectl apply -f hazelcast-client-k8s/deploy/kube-hazelcast-client.yaml
+   
     
  3. Running on Google Kubernetes Engine (GKE)
     
-    Go thru `commands.txt` file, it is a cheat sheet of `kube` commands required specific to this project.
+    Pre-requisite: 
+      1. Google cloud account.
+      2. New Cloud project
+      3. Go to Kubernetes Engine and set up a cluster.
+      4.Install the Google Cloud SDK, which includes the `gcloud` command-line tool. Using the gcloud command line tool,       
+      install the Kubernetes command-line tool. 
+      
+    Run the following commands.
     
-    ##### Pre-requisites
-    
-    Install the Google Cloud SDK, which includes the `gcloud` command-line tool. Using the gcloud command line tool, install 
-    the Kubernetes command-line tool. `kubectl` is used to communicate with   Kubernetes, which is the cluster orchestration 
-    system of GKE clusters:
+    ```
+       kubectl apply -f discovery-server-k8s/deploy/kube-discovery-server.yaml
+       kubectl apply -f hazelcast-server-k8s/deploy/kube-rbac.yaml
+       kubectl apply -f hazelcast-server-k8s/deploy/kube-hazelcast-server.yaml
+       kubectl apply -f hazelcast-client-k8s/deploy/kube-hazelcast-client.yaml
 
-    `gcloud components install kubectl`
 
+   Go thru `commands.txt` file, it is a cheat sheet of `kube` commands.
     
-Use ```/actuator/health``` on hazelcast server to view custom implemented health endpoint to view hazelcast-servers member join.      
+To view member creattion, go to ```/actuator/health``` on hazelcast server to view custom implemented health endpoint.      
     
  ### Test
  
