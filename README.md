@@ -9,7 +9,7 @@ Embeded Hazelcast Cluster On Kubernetes
 3) Docker
 4) Google Cloud - Google Kubernetes Engine
 
-![hazelcast-server (2)](https://user-images.githubusercontent.com/5833938/60470478-90022880-9c2e-11e9-9c0f-cd30afbcd607.jpg)
+![hazelcast-cluster-k8s](https://user-images.githubusercontent.com/5833938/63640371-7947e300-c66d-11e9-83e3-725304eeacfe.jpg)
 
 | Service Name        | port | Comments                       |  
 | ------------------- | -----| -------------------------------|
