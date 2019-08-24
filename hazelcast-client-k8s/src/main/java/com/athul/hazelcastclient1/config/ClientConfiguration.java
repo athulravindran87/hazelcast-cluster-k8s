@@ -4,20 +4,14 @@ import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.ClientConnectionStrategyConfig;
 import com.hazelcast.client.config.ClientNetworkConfig;
-import com.hazelcast.config.DiscoveryConfig;
-import com.hazelcast.config.DiscoveryStrategyConfig;
 import com.hazelcast.config.GroupConfig;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.kubernetes.HazelcastKubernetesDiscoveryStrategyFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @ComponentScan(basePackages = "com.athul.common.client", lazyInit = true)
@@ -48,19 +42,7 @@ public class ClientConfiguration
                 .setConnectionAttemptLimit(100_000)
                 .setConnectionAttemptPeriod(10_000);
         networkConfig.getKubernetesConfig().setEnabled(true);
-     //   networkConfig.setDiscoveryConfig(createDiscoveryConfig());
         return networkConfig;
-    }
-
-    private DiscoveryConfig createDiscoveryConfig() {
-        DiscoveryConfig discoveryConfig = new DiscoveryConfig();
-        Map<String, Comparable> properties = new HashMap<>();
-        discoveryConfig.addDiscoveryStrategyConfig(
-                new DiscoveryStrategyConfig
-                (new HazelcastKubernetesDiscoveryStrategyFactory(), properties)
-        );
-
-        return discoveryConfig;
     }
 
     private ClientConnectionStrategyConfig clientConnectionStrategyConfig() {
