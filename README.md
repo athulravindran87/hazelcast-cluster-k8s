@@ -45,7 +45,7 @@ There are 3 main components as depicted in the picture above. 1) Kubernetes clus
       1. Google cloud account.
       2. New Cloud project
       3. Go to Kubernetes Engine and set up a cluster.
-      4.Install the Google Cloud SDK, which includes the `gcloud` command-line tool. Using the gcloud command line tool,       
+      4. Install the Google Cloud SDK, which includes the `gcloud` command-line tool. Using the gcloud command line tool,     
       install the Kubernetes command-line tool. 
       
     Run the following commands.
@@ -59,7 +59,7 @@ There are 3 main components as depicted in the picture above. 1) Kubernetes clus
 
    Go thru `commands.txt` file, it is a cheat sheet of `kube` commands.
     
-To view member creattion, go to ```/actuator/health``` on hazelcast server to view custom implemented health endpoint.      
+To view member creation, go to ```/actuator/health``` on hazelcast server to view custom implemented health endpoint.      
     
  ### Test
  
