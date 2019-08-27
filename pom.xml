@@ -397,7 +397,7 @@
                                         <tags>
                                             <tag>v2</tag>
                                         </tags>
-                                        <dockerFile>${project.basedir}/deploy/DockerFile</dockerFile>
+                                        <dockerFile>${project.basedir}/deploy/Dockerfile</dockerFile>
                                         <contextDir>${project.basedir}</contextDir>
                                     </build>
                                 </image>
