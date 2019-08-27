@@ -379,7 +379,7 @@
                     <value>gcr</value>
                 </property>
                 <file>
-                    <exists>deploy/DockerFile</exists>
+                    <exists>deploy</exists>
                 </file>
             </activation>
             <build>
